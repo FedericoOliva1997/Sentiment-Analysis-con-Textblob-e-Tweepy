@@ -1,0 +1,629 @@
+{
+ "cells": [
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import pandas as pd\n",
+    "\n",
+    "\n",
+    "df = pd.read_csv(r\"C:\\Users\\Federico\\Documents\\Progetti Jupyter\\Tweepy\\ua.csv\", error_bad_lines=False)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 2,
+   "metadata": {
+    "scrolled": true
+   },
+   "outputs": [],
+   "source": [
+    "df.rename(columns={\"b'Le misure di contenimento #COVID19italia servono a non avere numeri come gran bretagna e francia, dove ormai intere\\\\xe2\\\\x80\\\\xa6 https://t.co/PVrr1zZemm'\": \"Testo\"}, inplace=True)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 3,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "df[\"Testo\"] =  df.Testo.str.replace('[^\\x00-\\x7F]','')\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 4,
+   "metadata": {
+    "scrolled": true
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>2020-10-13 16:11:14</th>\n",
+       "      <th>Testo</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>2020-10-13 16:11:09</td>\n",
+       "      <td>b'\\xf0\\x9f\\x93\\x8cI #rider hanno lavorato anch...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>2020-10-13 16:09:36</td>\n",
+       "      <td>b'Locarno (Svizzera): prorogata l\\xe2\\x80\\x99e...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>2020-10-13 15:59:59</td>\n",
+       "      <td>b'Qualcuno ancora convinto che la soluzione no...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3</th>\n",
+       "      <td>2020-10-13 15:55:44</td>\n",
+       "      <td>b'\\xe2\\x98\\x91\\xef\\xb8\\x8fCOVID-19: andamento ...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>4</th>\n",
+       "      <td>2020-10-13 15:54:36</td>\n",
+       "      <td>b'#Covid19, #Conte (Premier): \\xe2\\x80\\x9cMisu...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>...</th>\n",
+       "      <td>...</td>\n",
+       "      <td>...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3011</th>\n",
+       "      <td>2020-10-10 02:52:49</td>\n",
+       "      <td>b'Uno dei tanti motivi per cui il #governodell...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3012</th>\n",
+       "      <td>2020-10-10 02:34:23</td>\n",
+       "      <td>b'Lo senti l\\xe2\\x80\\x99odore? Mi piace l\\xe2\\...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3013</th>\n",
+       "      <td>2020-10-10 02:08:18</td>\n",
+       "      <td>b'#DeLuca ?\\nUn poveretto che attacca la #Juve...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3014</th>\n",
+       "      <td>2020-10-10 01:08:47</td>\n",
+       "      <td>b'Io tutte le vostre discoteche ora adibite a ...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3015</th>\n",
+       "      <td>2020-10-10 00:00:53</td>\n",
+       "      <td>b'Insegnare la lingua italiana online durante ...</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "<p>3016 rows × 2 columns</p>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "      2020-10-13 16:11:14                                              Testo\n",
+       "0     2020-10-13 16:11:09  b'\\xf0\\x9f\\x93\\x8cI #rider hanno lavorato anch...\n",
+       "1     2020-10-13 16:09:36  b'Locarno (Svizzera): prorogata l\\xe2\\x80\\x99e...\n",
+       "2     2020-10-13 15:59:59  b'Qualcuno ancora convinto che la soluzione no...\n",
+       "3     2020-10-13 15:55:44  b'\\xe2\\x98\\x91\\xef\\xb8\\x8fCOVID-19: andamento ...\n",
+       "4     2020-10-13 15:54:36  b'#Covid19, #Conte (Premier): \\xe2\\x80\\x9cMisu...\n",
+       "...                   ...                                                ...\n",
+       "3011  2020-10-10 02:52:49  b'Uno dei tanti motivi per cui il #governodell...\n",
+       "3012  2020-10-10 02:34:23  b'Lo senti l\\xe2\\x80\\x99odore? Mi piace l\\xe2\\...\n",
+       "3013  2020-10-10 02:08:18  b'#DeLuca ?\\nUn poveretto che attacca la #Juve...\n",
+       "3014  2020-10-10 01:08:47  b'Io tutte le vostre discoteche ora adibite a ...\n",
+       "3015  2020-10-10 00:00:53  b'Insegnare la lingua italiana online durante ...\n",
+       "\n",
+       "[3016 rows x 2 columns]"
+      ]
+     },
+     "execution_count": 4,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "df"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 5,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>2020-10-13 16:11:14</th>\n",
+       "      <th>Testo</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>2020-10-13 16:11:09</td>\n",
+       "      <td>\\xf0\\x9f\\x93\\x8cI #rider hanno lavorato anche ...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>2020-10-13 16:09:36</td>\n",
+       "      <td>Locarno (Svizzera): prorogata l\\xe2\\x80\\x99esp...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>2020-10-13 15:59:59</td>\n",
+       "      <td>Qualcuno ancora convinto che la soluzione non ...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3</th>\n",
+       "      <td>2020-10-13 15:55:44</td>\n",
+       "      <td>\\xe2\\x98\\x91\\xef\\xb8\\x8fCOVID-19: andamento gi...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>4</th>\n",
+       "      <td>2020-10-13 15:54:36</td>\n",
+       "      <td>#Covid19, #Conte (Premier): \\xe2\\x80\\x9cMisure...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>...</th>\n",
+       "      <td>...</td>\n",
+       "      <td>...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3011</th>\n",
+       "      <td>2020-10-10 02:52:49</td>\n",
+       "      <td>Uno dei tanti motivi per cui il #governodellav...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3012</th>\n",
+       "      <td>2020-10-10 02:34:23</td>\n",
+       "      <td>Lo senti l\\xe2\\x80\\x99odore? Mi piace l\\xe2\\x8...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3013</th>\n",
+       "      <td>2020-10-10 02:08:18</td>\n",
+       "      <td>#DeLuca ?\\nUn poveretto che attacca la #Juvent...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3014</th>\n",
+       "      <td>2020-10-10 01:08:47</td>\n",
+       "      <td>Io tutte le vostre discoteche ora adibite a \\x...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3015</th>\n",
+       "      <td>2020-10-10 00:00:53</td>\n",
+       "      <td>Insegnare la lingua italiana online durante il...</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "<p>3016 rows × 2 columns</p>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "      2020-10-13 16:11:14                                              Testo\n",
+       "0     2020-10-13 16:11:09  \\xf0\\x9f\\x93\\x8cI #rider hanno lavorato anche ...\n",
+       "1     2020-10-13 16:09:36  Locarno (Svizzera): prorogata l\\xe2\\x80\\x99esp...\n",
+       "2     2020-10-13 15:59:59  Qualcuno ancora convinto che la soluzione non ...\n",
+       "3     2020-10-13 15:55:44  \\xe2\\x98\\x91\\xef\\xb8\\x8fCOVID-19: andamento gi...\n",
+       "4     2020-10-13 15:54:36  #Covid19, #Conte (Premier): \\xe2\\x80\\x9cMisure...\n",
+       "...                   ...                                                ...\n",
+       "3011  2020-10-10 02:52:49  Uno dei tanti motivi per cui il #governodellav...\n",
+       "3012  2020-10-10 02:34:23  Lo senti l\\xe2\\x80\\x99odore? Mi piace l\\xe2\\x8...\n",
+       "3013  2020-10-10 02:08:18  #DeLuca ?\\nUn poveretto che attacca la #Juvent...\n",
+       "3014  2020-10-10 01:08:47  Io tutte le vostre discoteche ora adibite a \\x...\n",
+       "3015  2020-10-10 00:00:53  Insegnare la lingua italiana online durante il...\n",
+       "\n",
+       "[3016 rows x 2 columns]"
+      ]
+     },
+     "execution_count": 5,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "df[\"Testo\"] = df[\"Testo\"].str[2:]\n",
+    "df\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 6,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "series = df['Testo']\n",
+    "df[\"Testo\"] =  [s.encode('ascii', 'ignore').strip()\n",
+    "               for s in series.str.decode('unicode_escape')]"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 7,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>2020-10-13 16:11:14</th>\n",
+       "      <th>Testo</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>2020-10-13 16:11:09</td>\n",
+       "      <td>b\"I #rider hanno lavorato anche durante il #lo...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>2020-10-13 16:09:36</td>\n",
+       "      <td>b\"Locarno (Svizzera): prorogata lesposizione G...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>2020-10-13 15:59:59</td>\n",
+       "      <td>b\"Qualcuno ancora convinto che la soluzione no...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3</th>\n",
+       "      <td>2020-10-13 15:55:44</td>\n",
+       "      <td>b\"COVID-19: andamento giornaliero #tamponi dia...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>4</th>\n",
+       "      <td>2020-10-13 15:54:36</td>\n",
+       "      <td>b\"#Covid19, #Conte (Premier): Misure nel #DPCM...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>...</th>\n",
+       "      <td>...</td>\n",
+       "      <td>...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3011</th>\n",
+       "      <td>2020-10-10 02:52:49</td>\n",
+       "      <td>b\"Uno dei tanti motivi per cui il #governodell...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3012</th>\n",
+       "      <td>2020-10-10 02:34:23</td>\n",
+       "      <td>b\"Lo senti lodore? Mi piace lodore del #lockdo...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3013</th>\n",
+       "      <td>2020-10-10 02:08:18</td>\n",
+       "      <td>b\"#DeLuca ?\\nUn poveretto che attacca la #Juve...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3014</th>\n",
+       "      <td>2020-10-10 01:08:47</td>\n",
+       "      <td>b\"Io tutte le vostre discoteche ora adibite a ...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3015</th>\n",
+       "      <td>2020-10-10 00:00:53</td>\n",
+       "      <td>b\"Insegnare la lingua italiana online durante ...</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "<p>3016 rows × 2 columns</p>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "      2020-10-13 16:11:14                                              Testo\n",
+       "0     2020-10-13 16:11:09  b\"I #rider hanno lavorato anche durante il #lo...\n",
+       "1     2020-10-13 16:09:36  b\"Locarno (Svizzera): prorogata lesposizione G...\n",
+       "2     2020-10-13 15:59:59  b\"Qualcuno ancora convinto che la soluzione no...\n",
+       "3     2020-10-13 15:55:44  b\"COVID-19: andamento giornaliero #tamponi dia...\n",
+       "4     2020-10-13 15:54:36  b\"#Covid19, #Conte (Premier): Misure nel #DPCM...\n",
+       "...                   ...                                                ...\n",
+       "3011  2020-10-10 02:52:49  b\"Uno dei tanti motivi per cui il #governodell...\n",
+       "3012  2020-10-10 02:34:23  b\"Lo senti lodore? Mi piace lodore del #lockdo...\n",
+       "3013  2020-10-10 02:08:18  b\"#DeLuca ?\\nUn poveretto che attacca la #Juve...\n",
+       "3014  2020-10-10 01:08:47  b\"Io tutte le vostre discoteche ora adibite a ...\n",
+       "3015  2020-10-10 00:00:53  b\"Insegnare la lingua italiana online durante ...\n",
+       "\n",
+       "[3016 rows x 2 columns]"
+      ]
+     },
+     "execution_count": 7,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "df"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 8,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "df['Testo'] = df['Testo'].str.decode('utf-8') "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 9,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "df['Testo'] = df['Testo'].astype(str)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 10,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "from googletrans import Translator"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 11,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "translator = Translator()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 12,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>2020-10-13 16:11:14</th>\n",
+       "      <th>Testo</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>2020-10-13 16:11:09</td>\n",
+       "      <td>I #rider hanno lavorato anche durante il #lock...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>2020-10-13 16:09:36</td>\n",
+       "      <td>Locarno (Svizzera): prorogata lesposizione Gil...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>2020-10-13 15:59:59</td>\n",
+       "      <td>Qualcuno ancora convinto che la soluzione non ...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3</th>\n",
+       "      <td>2020-10-13 15:55:44</td>\n",
+       "      <td>COVID-19: andamento giornaliero #tamponi diagn...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>4</th>\n",
+       "      <td>2020-10-13 15:54:36</td>\n",
+       "      <td>#Covid19, #Conte (Premier): Misure nel #DPCM f...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>...</th>\n",
+       "      <td>...</td>\n",
+       "      <td>...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3011</th>\n",
+       "      <td>2020-10-10 02:52:49</td>\n",
+       "      <td>Uno dei tanti motivi per cui il #governodellav...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3012</th>\n",
+       "      <td>2020-10-10 02:34:23</td>\n",
+       "      <td>Lo senti lodore? Mi piace lodore del #lockdown...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3013</th>\n",
+       "      <td>2020-10-10 02:08:18</td>\n",
+       "      <td>#DeLuca ?\\nUn poveretto che attacca la #Juvent...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3014</th>\n",
+       "      <td>2020-10-10 01:08:47</td>\n",
+       "      <td>Io tutte le vostre discoteche ora adibite a lo...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3015</th>\n",
+       "      <td>2020-10-10 00:00:53</td>\n",
+       "      <td>Insegnare la lingua italiana online durante il...</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "<p>3016 rows × 2 columns</p>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "      2020-10-13 16:11:14                                              Testo\n",
+       "0     2020-10-13 16:11:09  I #rider hanno lavorato anche durante il #lock...\n",
+       "1     2020-10-13 16:09:36  Locarno (Svizzera): prorogata lesposizione Gil...\n",
+       "2     2020-10-13 15:59:59  Qualcuno ancora convinto che la soluzione non ...\n",
+       "3     2020-10-13 15:55:44  COVID-19: andamento giornaliero #tamponi diagn...\n",
+       "4     2020-10-13 15:54:36  #Covid19, #Conte (Premier): Misure nel #DPCM f...\n",
+       "...                   ...                                                ...\n",
+       "3011  2020-10-10 02:52:49  Uno dei tanti motivi per cui il #governodellav...\n",
+       "3012  2020-10-10 02:34:23  Lo senti lodore? Mi piace lodore del #lockdown...\n",
+       "3013  2020-10-10 02:08:18  #DeLuca ?\\nUn poveretto che attacca la #Juvent...\n",
+       "3014  2020-10-10 01:08:47  Io tutte le vostre discoteche ora adibite a lo...\n",
+       "3015  2020-10-10 00:00:53  Insegnare la lingua italiana online durante il...\n",
+       "\n",
+       "[3016 rows x 2 columns]"
+      ]
+     },
+     "execution_count": 12,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "df"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 13,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Translated(src=en, dest=it, text=Buongiorno., pronunciation=Good morning., extra_data=\"{'translat...\")\n"
+     ]
+    }
+   ],
+   "source": [
+    "traduzione=translator.translate('Good morning.', dest=\"it\")\n",
+    "print(traduzione)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.8.3"
+  },
+  "varInspector": {
+   "cols": {
+    "lenName": 16,
+    "lenType": 16,
+    "lenVar": 40
+   },
+   "kernels_config": {
+    "python": {
+     "delete_cmd_postfix": "",
+     "delete_cmd_prefix": "del ",
+     "library": "var_list.py",
+     "varRefreshCmd": "print(var_dic_list())"
+    },
+    "r": {
+     "delete_cmd_postfix": ") ",
+     "delete_cmd_prefix": "rm(",
+     "library": "var_list.r",
+     "varRefreshCmd": "cat(var_dic_list()) "
+    }
+   },
+   "types_to_exclude": [
+    "module",
+    "function",
+    "builtin_function_or_method",
+    "instance",
+    "_Feature"
+   ],
+   "window_display": false
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 4
+}
