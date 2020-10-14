@@ -4,10 +4,10 @@ import csv
 import pandas as pd
   
 # assign the values accordingly 
-consumer_key ='RkwKIIM9R0e5nad3lZW41VXVt'
-consumer_secret ='p4T3BSBaJxbK5dRoJnoKyguNsQfO1OW9oudMeTb9tiQhJ11Sfc'
-access_token ='2328987701-TLuFL7rJnzdQWOeq2kvdbr3bfnnJRwAXko9Xwld'
-access_token_secret ='l8bxYB4ohSdBBv2Sv1a1NyrR3qs35uoAzOvnpznnJFDcK'
+consumer_key ='\'
+consumer_secret ='\'
+access_token ='\'
+access_token_secret ='\'
   
 # authorization of consumer key and consumer secret 
 auth = tweepy.OAuthHandler(consumer_key, consumer_secret) 
